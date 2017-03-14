@@ -39,6 +39,7 @@
             this.btnLoginNew = new System.Windows.Forms.Button();
             this.lblPhoneNumber = new System.Windows.Forms.Label();
             this.LoadContact = new System.Windows.Forms.TabPage();
+            this.btnSearch = new System.Windows.Forms.Button();
             this.lvList = new System.Windows.Forms.ListView();
             this.Username = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.MobileNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -48,12 +49,11 @@
             this.gb_SendMessage = new System.Windows.Forms.GroupBox();
             this.btnSendFileNumber = new System.Windows.Forms.Button();
             this.btnSendTextNumber = new System.Windows.Forms.Button();
-            this.tbMessage = new ChreneLib.Controls.TextBoxes.CTextBox();
             this.ReceiveMessage = new System.Windows.Forms.TabPage();
-            this.TxtHistory = new MiladsoftRichTextBox.MiladsoftRichTextBox();
+            this.nudCount = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnGetHistory = new System.Windows.Forms.Button();
             this.SendMessageToPublicChannel = new System.Windows.Forms.TabPage();
-            this.tbChannelMessage = new ChreneLib.Controls.TextBoxes.CTextBox();
             this.lbl_at = new System.Windows.Forms.Label();
             this.tbChannelId = new System.Windows.Forms.TextBox();
             this.btnChannelSend = new System.Windows.Forms.Button();
@@ -64,22 +64,22 @@
             this.tslblSendCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.gb_Top = new System.Windows.Forms.GroupBox();
             this.lblID = new System.Windows.Forms.Label();
-            this.tbSerch = new ChreneLib.Controls.TextBoxes.CTextBox();
-            this.btnSearch = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.nudCount = new System.Windows.Forms.NumericUpDown();
+            this.tbSerch = new System.Windows.Forms.TextBox();
+            this.tbChannelMessage = new System.Windows.Forms.TextBox();
+            this.tbMessage = new System.Windows.Forms.TextBox();
+            this.TxtHistory = new System.Windows.Forms.TextBox();
             this.tcMain.SuspendLayout();
             this.tpLogin.SuspendLayout();
             this.gbNewAccount.SuspendLayout();
             this.LoadContact.SuspendLayout();
             this.gb_SendMessage.SuspendLayout();
             this.ReceiveMessage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCount)).BeginInit();
             this.SendMessageToPublicChannel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSelfPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbUserPicture)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.gb_Top.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCount)).BeginInit();
             this.SuspendLayout();
             // 
             // tcMain
@@ -182,8 +182,8 @@
             // 
             // LoadContact
             // 
-            this.LoadContact.Controls.Add(this.btnSearch);
             this.LoadContact.Controls.Add(this.tbSerch);
+            this.LoadContact.Controls.Add(this.btnSearch);
             this.LoadContact.Controls.Add(this.lvList);
             this.LoadContact.Controls.Add(this.btnLoadContact);
             this.LoadContact.Controls.Add(this.gb_SendMessage);
@@ -194,6 +194,16 @@
             this.LoadContact.TabIndex = 1;
             this.LoadContact.Text = "Load Contact & Send Message";
             this.LoadContact.UseVisualStyleBackColor = true;
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(591, 15);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(75, 23);
+            this.btnSearch.TabIndex = 40;
+            this.btnSearch.Text = "Search";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // lvList
             // 
@@ -250,9 +260,9 @@
             // 
             // gb_SendMessage
             // 
+            this.gb_SendMessage.Controls.Add(this.tbMessage);
             this.gb_SendMessage.Controls.Add(this.btnSendFileNumber);
             this.gb_SendMessage.Controls.Add(this.btnSendTextNumber);
-            this.gb_SendMessage.Controls.Add(this.tbMessage);
             this.gb_SendMessage.Location = new System.Drawing.Point(8, 290);
             this.gb_SendMessage.Name = "gb_SendMessage";
             this.gb_SendMessage.Size = new System.Drawing.Size(656, 92);
@@ -280,23 +290,11 @@
             this.btnSendTextNumber.UseVisualStyleBackColor = true;
             this.btnSendTextNumber.Click += new System.EventHandler(this.SendTextNumber_Click);
             // 
-            // tbMessage
-            // 
-            this.tbMessage.Location = new System.Drawing.Point(6, 20);
-            this.tbMessage.Multiline = true;
-            this.tbMessage.Name = "tbMessage";
-            this.tbMessage.Size = new System.Drawing.Size(535, 64);
-            this.tbMessage.TabIndex = 18;
-            this.tbMessage.WaterMark = "Message ...";
-            this.tbMessage.WaterMarkActiveForeColor = System.Drawing.Color.Gray;
-            this.tbMessage.WaterMarkFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.tbMessage.WaterMarkForeColor = System.Drawing.Color.LightGray;
-            // 
             // ReceiveMessage
             // 
+            this.ReceiveMessage.Controls.Add(this.TxtHistory);
             this.ReceiveMessage.Controls.Add(this.nudCount);
             this.ReceiveMessage.Controls.Add(this.label1);
-            this.ReceiveMessage.Controls.Add(this.TxtHistory);
             this.ReceiveMessage.Controls.Add(this.btnGetHistory);
             this.ReceiveMessage.Location = new System.Drawing.Point(4, 22);
             this.ReceiveMessage.Name = "ReceiveMessage";
@@ -305,16 +303,31 @@
             this.ReceiveMessage.Text = "Receive Message All Type";
             this.ReceiveMessage.UseVisualStyleBackColor = true;
             // 
-            // TxtHistory
+            // nudCount
             // 
-            this.TxtHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.TxtHistory.Location = new System.Drawing.Point(8, 46);
-            this.TxtHistory.Name = "TxtHistory";
-            this.TxtHistory.Size = new System.Drawing.Size(652, 332);
-            this.TxtHistory.TabIndex = 18;
-            this.TxtHistory.Text = "";
+            this.nudCount.Location = new System.Drawing.Point(171, 17);
+            this.nudCount.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.nudCount.Name = "nudCount";
+            this.nudCount.Size = new System.Drawing.Size(65, 21);
+            this.nudCount.TabIndex = 21;
+            this.nudCount.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(122, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(43, 13);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "Count :";
             // 
             // btnGetHistory
             // 
@@ -339,18 +352,6 @@
             this.SendMessageToPublicChannel.TabIndex = 3;
             this.SendMessageToPublicChannel.Text = "Send Message To Public Channel";
             this.SendMessageToPublicChannel.UseVisualStyleBackColor = true;
-            // 
-            // tbChannelMessage
-            // 
-            this.tbChannelMessage.Location = new System.Drawing.Point(31, 313);
-            this.tbChannelMessage.Multiline = true;
-            this.tbChannelMessage.Name = "tbChannelMessage";
-            this.tbChannelMessage.Size = new System.Drawing.Size(553, 56);
-            this.tbChannelMessage.TabIndex = 19;
-            this.tbChannelMessage.WaterMark = "Message ...";
-            this.tbChannelMessage.WaterMarkActiveForeColor = System.Drawing.Color.Gray;
-            this.tbChannelMessage.WaterMarkFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.tbChannelMessage.WaterMarkForeColor = System.Drawing.Color.LightGray;
             // 
             // lbl_at
             // 
@@ -448,50 +449,34 @@
             // 
             // tbSerch
             // 
-            this.tbSerch.Location = new System.Drawing.Point(375, 17);
+            this.tbSerch.Location = new System.Drawing.Point(448, 17);
             this.tbSerch.Name = "tbSerch";
-            this.tbSerch.Size = new System.Drawing.Size(210, 21);
-            this.tbSerch.TabIndex = 39;
-            this.tbSerch.WaterMark = "Search By Phone Number ...";
-            this.tbSerch.WaterMarkActiveForeColor = System.Drawing.Color.Gray;
-            this.tbSerch.WaterMarkFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.tbSerch.WaterMarkForeColor = System.Drawing.Color.LightGray;
+            this.tbSerch.Size = new System.Drawing.Size(137, 21);
+            this.tbSerch.TabIndex = 41;
             // 
-            // btnSearch
+            // tbChannelMessage
             // 
-            this.btnSearch.Location = new System.Drawing.Point(591, 15);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(75, 23);
-            this.btnSearch.TabIndex = 40;
-            this.btnSearch.Text = "Search";
-            this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            this.tbChannelMessage.Location = new System.Drawing.Point(31, 313);
+            this.tbChannelMessage.Multiline = true;
+            this.tbChannelMessage.Name = "tbChannelMessage";
+            this.tbChannelMessage.Size = new System.Drawing.Size(553, 58);
+            this.tbChannelMessage.TabIndex = 20;
             // 
-            // label1
+            // tbMessage
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(122, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(43, 13);
-            this.label1.TabIndex = 20;
-            this.label1.Text = "Count :";
+            this.tbMessage.Location = new System.Drawing.Point(7, 21);
+            this.tbMessage.Multiline = true;
+            this.tbMessage.Name = "tbMessage";
+            this.tbMessage.Size = new System.Drawing.Size(534, 63);
+            this.tbMessage.TabIndex = 16;
             // 
-            // nudCount
+            // TxtHistory
             // 
-            this.nudCount.Location = new System.Drawing.Point(171, 17);
-            this.nudCount.Maximum = new decimal(new int[] {
-            100000,
-            0,
-            0,
-            0});
-            this.nudCount.Name = "nudCount";
-            this.nudCount.Size = new System.Drawing.Size(65, 21);
-            this.nudCount.TabIndex = 21;
-            this.nudCount.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
+            this.TxtHistory.Location = new System.Drawing.Point(8, 46);
+            this.TxtHistory.Multiline = true;
+            this.TxtHistory.Name = "TxtHistory";
+            this.TxtHistory.Size = new System.Drawing.Size(653, 332);
+            this.TxtHistory.TabIndex = 22;
             // 
             // FrmMain
             // 
@@ -519,6 +504,7 @@
             this.gb_SendMessage.PerformLayout();
             this.ReceiveMessage.ResumeLayout(false);
             this.ReceiveMessage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudCount)).EndInit();
             this.SendMessageToPublicChannel.ResumeLayout(false);
             this.SendMessageToPublicChannel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbSelfPicture)).EndInit();
@@ -527,7 +513,6 @@
             this.statusStrip1.PerformLayout();
             this.gb_Top.ResumeLayout(false);
             this.gb_Top.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudCount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -556,13 +541,10 @@
         private System.Windows.Forms.Button btnGetHistory;
         private System.Windows.Forms.PictureBox pbUserPicture;
         private System.Windows.Forms.TabPage SendMessageToPublicChannel;
-        private ChreneLib.Controls.TextBoxes.CTextBox tbMessage;
-        private MiladsoftRichTextBox.MiladsoftRichTextBox TxtHistory;
         private System.Windows.Forms.TextBox tbChannelId;
         private System.Windows.Forms.Button btnChannelSend;
         private System.Windows.Forms.Label lbl_at;
         private System.Windows.Forms.GroupBox gb_Top;
-        private ChreneLib.Controls.TextBoxes.CTextBox tbChannelMessage;
         private System.Windows.Forms.ListView lvList;
         private System.Windows.Forms.ColumnHeader Username;
         private System.Windows.Forms.ColumnHeader MobileNumber;
@@ -571,9 +553,12 @@
         private System.Windows.Forms.Button btnLoadContact;
         private System.Windows.Forms.Label lblID;
         private System.Windows.Forms.Button btnSearch;
-        private ChreneLib.Controls.TextBoxes.CTextBox tbSerch;
         private System.Windows.Forms.NumericUpDown nudCount;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tbSerch;
+        private System.Windows.Forms.TextBox tbChannelMessage;
+        private System.Windows.Forms.TextBox tbMessage;
+        private System.Windows.Forms.TextBox TxtHistory;
     }
 }
 
