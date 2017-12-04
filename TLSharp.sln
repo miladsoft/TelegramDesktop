@@ -1,13 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeleSharp.TL", "TeleSharp.TL\TeleSharp.TL.csproj", "{D6144517-91D2-4880-86DF-E9FF5D7F383A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Telegram", "Telegram\Telegram.csproj", "{59A71139-90F9-4578-813F-54CAEE104F26}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TLSharp.Core", "TLSharp.Core\TLSharp.Core.csproj", "{400D2544-1CC6-4D8A-A62C-2292D9947A16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,21 +11,16 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D6144517-91D2-4880-86DF-E9FF5D7F383A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D6144517-91D2-4880-86DF-E9FF5D7F383A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D6144517-91D2-4880-86DF-E9FF5D7F383A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D6144517-91D2-4880-86DF-E9FF5D7F383A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{59A71139-90F9-4578-813F-54CAEE104F26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{59A71139-90F9-4578-813F-54CAEE104F26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59A71139-90F9-4578-813F-54CAEE104F26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59A71139-90F9-4578-813F-54CAEE104F26}.Release|Any CPU.Build.0 = Release|Any CPU
-		{400D2544-1CC6-4D8A-A62C-2292D9947A16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{400D2544-1CC6-4D8A-A62C-2292D9947A16}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{400D2544-1CC6-4D8A-A62C-2292D9947A16}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{400D2544-1CC6-4D8A-A62C-2292D9947A16}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D0957DA0-DD47-4F5B-B6D4-AD20E32FC601}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0

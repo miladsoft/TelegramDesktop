@@ -107,7 +107,7 @@ namespace Telegram
             catch (CloudPasswordNeededException ex)
             {
                 var password = await client.GetPasswordSetting();
-                var password_str = "";
+                var password_str = TxtPassword.Text;
 
                 user = await client.MakeAuthWithPasswordAsync(password, password_str);
 
@@ -122,18 +122,18 @@ namespace Telegram
             try
             {
 
-                var photo = ((TLUserProfilePhoto)user.photo);
-                var photoLocation = (TLFileLocation)photo.photo_small;
+                var photo = ((TLUserProfilePhoto)user.Photo);
+                var photoLocation = (TLFileLocation)photo.PhotoSmall;
                 var resFile = await client.GetFile(new TLInputFileLocation()
                 {
-                    local_id = photoLocation.local_id,
-                    secret = photoLocation.secret,
-                    volume_id = photoLocation.volume_id
+                    LocalId = photoLocation.LocalId,
+                    Secret = photoLocation.Secret,
+                    VolumeId = photoLocation.VolumeId
                 }, 100000, 0);
 
 
                 Bitmap image;
-                using (MemoryStream stream = new MemoryStream(resFile.bytes))
+                using (MemoryStream stream = new MemoryStream(resFile.Bytes))
                 {
                     image = new Bitmap(stream);
                 }
@@ -175,23 +175,23 @@ namespace Telegram
                         var result = await client.GetContactsAsync();
 
                         //find recipient in contacts
-                        var user = result.users.lists
+                        var user = result.Users.ToList()
                             .Where(x => x.GetType() == typeof(TLUser))
                             .Cast<TLUser>()
-                            .FirstOrDefault(x => x.self);
+                            .FirstOrDefault(x => x.Self);
 
-                        var photo = ((TLUserProfilePhoto)user.photo);
-                        var photoLocation = (TLFileLocation)photo.photo_small;
+                        var photo = ((TLUserProfilePhoto)user.Photo);
+                        var photoLocation = (TLFileLocation)photo.PhotoSmall;
                         var resFile = await client.GetFile(new TLInputFileLocation()
                         {
-                            local_id = photoLocation.local_id,
-                            secret = photoLocation.secret,
-                            volume_id = photoLocation.volume_id
+                            LocalId = photoLocation.LocalId,
+                            Secret = photoLocation.Secret,
+                            VolumeId = photoLocation.VolumeId
                         }, 100000, 0);
 
 
                         Bitmap image;
-                        using (MemoryStream stream = new MemoryStream(resFile.bytes))
+                        using (MemoryStream stream = new MemoryStream(resFile.Bytes))
                         {
                             image = new Bitmap(stream);
 
@@ -245,18 +245,18 @@ namespace Telegram
 
             var result = await client.GetContactsAsync();
 
-            var user = result.users.lists
+            var user = result.Users.ToList()
                 .OfType<TLUser>()
-                .FirstOrDefault(x => x.phone == normalizedNumber);
+                .FirstOrDefault(x => x.Phone == normalizedNumber);
 
             if (user == null)
             {
                 throw new System.Exception("Number was not found in Contacts List of user: " + NumberToSendMessage);
             }
 
-            await client.SendTypingAsync(new TLInputPeerUser() { user_id = user.id });
+            await client.SendTypingAsync(new TLInputPeerUser() { UserId = user.Id });
             Thread.Sleep(3000);
-            await client.SendMessageAsync(new TLInputPeerUser() { user_id = user.id }, tbMessage.Text);
+            await client.SendMessageAsync(new TLInputPeerUser() { UserId = user.Id }, tbMessage.Text);
 
         }
 
@@ -268,11 +268,11 @@ namespace Telegram
             await client.ConnectAsync();
 
             var dialogs = (TLDialogsSlice)await client.GetUserDialogsAsync();
-            var chat = dialogs.chats.lists
+            var chat = dialogs.Chats.ToList()
                 .OfType<TLChannel>()
-                .FirstOrDefault(c => c.username == tbChannelId.Text);
+                .FirstOrDefault(c => c.Username == tbChannelId.Text);
 
-            await client.SendMessageAsync(new TLInputPeerChannel() { channel_id = chat.id, access_hash = chat.access_hash.Value }, tbChannelMessage.Text);
+            await client.SendMessageAsync(new TLInputPeerChannel() { ChannelId = chat.Id, AccessHash = chat.AccessHash.Value }, tbChannelMessage.Text);
         }
 
 
@@ -306,12 +306,12 @@ namespace Telegram
 
                 var result = await client.GetContactsAsync();
                 NumberToSendMessage = tbNumber.Text;
-                var user = result.users.lists
+                var user = result.Users.ToList()
                     .OfType<TLUser>()
-                    .FirstOrDefault(x => x.phone == NumberToSendMessage);
+                    .FirstOrDefault(x => x.Phone == NumberToSendMessage);
 
                 var fileResult = (TLInputFile)await client.UploadFile(onlyfilename, new StreamReader(filename));
-                await client.SendUploadedPhoto(new TLInputPeerUser() { user_id = user.id }, fileResult, tbMessage.Text);
+                await client.SendUploadedPhoto(new TLInputPeerUser() { UserId = user.Id }, fileResult, tbMessage.Text);
             }
 
         }
@@ -350,9 +350,9 @@ namespace Telegram
 
                 var result = await client.GetContactsAsync();
 
-                var user = result.users.lists
+                var user = result.Users.ToList()
                     .OfType<TLUser>()
-                    .FirstOrDefault(x => x.phone == normalizedNumber);
+                    .FirstOrDefault(x => x.Phone == normalizedNumber);
 
                 if (user == null)
                 {
@@ -360,37 +360,37 @@ namespace Telegram
                 }
 
                 TLAbsMessages tlAbsMessages =
-                    await client.GetHistoryAsync(new TLInputPeerUser() { user_id = user.id }, 0, -1,int.Parse( nudCount.Value.ToString()));
+                    await client.GetHistoryAsync(new TLInputPeerUser() { UserId = user.Id }, 0, -1, int.Parse(nudCount.Value.ToString()));
                 try
                 {
                     var tlMessages = (TLMessages)tlAbsMessages;
 
-                    for (var index = 0; index < tlMessages.messages.lists.Count; index++)
+                    for (var index = 0; index < tlMessages.Messages.ToList().Count; index++)
                     {
-                        var tlAbsMessage = tlMessages.messages.lists[index];
+                        var tlAbsMessage = tlMessages.Messages.ToList()[index];
                         var message = (TLMessage)tlAbsMessage;
                         _resultUserMessages.Add(new UserMessage()
                         {
-                            FromId = message.from_id,
-                            Message = message.message,
-                            CreateDateTime = message.date,
-                            Media = message.media
+                            FromId = message.FromId,
+                            Message = message.Message,
+                            CreateDateTime = message.Date,
+                            Media = message.Media
                         });
                     }
                 }
                 catch (Exception)
                 {
                     var tlMessagesslice = (TLMessagesSlice)tlAbsMessages;
-                    for (var index = 0; index < tlMessagesslice.messages.lists.Count; index++)
+                    for (var index = 0; index < tlMessagesslice.Messages.ToList().Count; index++)
                     {
-                        var tlAbsMessage = tlMessagesslice.messages.lists[index];
+                        var tlAbsMessage = tlMessagesslice.Messages.ToList()[index];
                         var message = (TLMessage)tlAbsMessage;
                         _resultUserMessages.Add(new UserMessage()
                         {
-                            FromId = message.from_id,
-                            Message = message.message,
-                            CreateDateTime = message.date,
-                            Media = message.media
+                            FromId = message.FromId,
+                            Message = message.Message,
+                            CreateDateTime = message.Date,
+                            Media = message.Media
                         });
                     }
 
@@ -410,23 +410,23 @@ namespace Telegram
                             case "TeleSharp.TL.TLMessageMediaDocument":
                                 {
                                     var media = (TLMessageMediaDocument)item.Media;
-                                    var document = (TLDocument)media.document;
+                                    var document = (TLDocument)media.Document;
                                     TLDocumentAttributeFilename filename = null;
                                     try
                                     {
-                                        var count = document.attributes.lists.Count;
+                                        var count = document.Attributes.ToList().Count;
 
                                         switch (count)
                                         {
                                             case 1:
                                                 {
-                                                    filename = (TLDocumentAttributeFilename)(document.attributes.lists[0]);
+                                                    filename = (TLDocumentAttributeFilename)(document.Attributes.ToList()[0]);
 
                                                     break;
                                                 }
                                             case 2:
                                                 {
-                                                    filename = (TLDocumentAttributeFilename)(document.attributes.lists[1]);
+                                                    filename = (TLDocumentAttributeFilename)(document.Attributes.ToList()[1]);
 
                                                     break;
                                                 }
@@ -434,13 +434,13 @@ namespace Telegram
                                                 {
                                                     try
                                                     {
-                                                        filename = (TLDocumentAttributeFilename)(document.attributes.lists[2]);
+                                                        filename = (TLDocumentAttributeFilename)(document.Attributes.ToList()[2]);
 
                                                     }
                                                     catch
                                                     {
 
-                                                        filename = (TLDocumentAttributeFilename)(document.attributes.lists[1]);
+                                                        filename = (TLDocumentAttributeFilename)(document.Attributes.ToList()[1]);
                                                         TxtHistory.Text += "==>" + item.FromId + " : " + "@Gif \n";
                                                     }
 
@@ -463,14 +463,14 @@ namespace Telegram
 
                                         new TLInputDocumentFileLocation()
                                         {
-                                            access_hash = document.access_hash,
-                                            id = document.id,
-                                            version = document.version,
+                                            AccessHash = document.AccessHash,
+                                            Id = document.Id,
+                                            Version = document.Version,
 
                                         },
-                                        document.size);
+                                        document.Size);
 
-                                    SaveData(resFile.bytes, filename.file_name);
+                                    SaveData(resFile.Bytes, filename.FileName);
                                     break;
                                 }
 
@@ -479,23 +479,23 @@ namespace Telegram
                             case "TeleSharp.TL.TLMessageMediaPhoto":
                                 {
                                     var media = (TLMessageMediaPhoto)item.Media;
-                                    var caption = media.caption;
-                                    var photo = (TLPhoto)media.photo;
-                                    var count = photo.sizes.lists.Count();
-                                    var photosize = (TLPhotoSize)photo.sizes.lists[count - 1];
+                                    var caption = media.Caption;
+                                    var photo = (TLPhoto)media.Photo;
+                                    var count = photo.Sizes.ToList().Count();
+                                    var photosize = (TLPhotoSize)photo.Sizes.ToList()[count - 1];
 
-                                    var photoLocation = (TLFileLocation)photosize.location;
+                                    var photoLocation = (TLFileLocation)photosize.Location;
                                     var resFile = await client.GetFile(new TLInputFileLocation()
                                     {
-                                        local_id = photoLocation.local_id,
-                                        secret = photoLocation.secret,
-                                        volume_id = photoLocation.volume_id
-                                    }, photosize.size, 0);
+                                        LocalId = photoLocation.LocalId,
+                                        Secret = photoLocation.Secret,
+                                        VolumeId = photoLocation.VolumeId
+                                    }, photosize.Size, 0);
 
 
                                     string filenamet = "";
                                     Guid name;
-                                    var imageType = resFile.type;
+                                    var imageType = resFile.Type;
 
 
                                     switch (imageType.Constructor)
@@ -526,7 +526,7 @@ namespace Telegram
                                             }
                                     }
 
-                                    SaveData(resFile.bytes, filenamet);
+                                    SaveData(resFile.Bytes, filenamet);
                                     break;
                                 }
                             default:
@@ -575,25 +575,25 @@ namespace Telegram
                 await client.ConnectAsync();
                 var result = await client.GetContactsAsync();
 
-                foreach (var item in result.contacts.lists)
+                foreach (var item in result.Contacts.ToList())
                 {
 
 
 
 
-                    var user = result.users.lists
+                    var user = result.Users.ToList()
                                .OfType<TLUser>()
-                               .FirstOrDefault(x => x.id == item.user_id);
+                               .FirstOrDefault(x => x.Id == item.UserId);
 
-                    if (user.phone.ToString().Contains(searchtext))
+                    if (user.Phone.ToString().Contains(searchtext))
                     {
 
-                        ListViewItem list = new ListViewItem(user.username != null ? user.username : " ");
+                        ListViewItem list = new ListViewItem(user.Username != null ? user.Username : " ");
 
-                        list.SubItems.Add(user.phone);
-                        list.SubItems.Add(user.first_name != null ? user.first_name : " ");
+                        list.SubItems.Add(user.Phone);
+                        list.SubItems.Add(user.FirstName != null ? user.FirstName : " ");
 
-                        list.SubItems.Add(user.last_name != null ? user.last_name : " ");
+                        list.SubItems.Add(user.LastName != null ? user.LastName : " ");
 
                         lvList.Items.AddRange(new ListViewItem[] { list });
                     }
@@ -621,25 +621,25 @@ namespace Telegram
                     var result = await client.GetContactsAsync();
 
                     //find recipient in contacts
-                    var user = result.users.lists
+                    var user = result.Users.ToList()
                         .Where(x => x.GetType() == typeof(TLUser))
                         .Cast<TLUser>()
-                        .FirstOrDefault(x => x.phone == tbNumber.Text);
+                        .FirstOrDefault(x => x.Phone == tbNumber.Text);
 
-                    lblID.Text = user.id.ToString();
+                    lblID.Text = user.Id.ToString();
 
-                    var photo = ((TLUserProfilePhoto)user.photo);
-                    var photoLocation = (TLFileLocation)photo.photo_small;
+                    var photo = ((TLUserProfilePhoto)user.Photo);
+                    var photoLocation = (TLFileLocation)photo.PhotoSmall;
                     var resFile = await client.GetFile(new TLInputFileLocation()
                     {
-                        local_id = photoLocation.local_id,
-                        secret = photoLocation.secret,
-                        volume_id = photoLocation.volume_id
+                        LocalId = photoLocation.LocalId,
+                        Secret = photoLocation.Secret,
+                        VolumeId = photoLocation.VolumeId
                     }, 100000, 0);
 
 
                     Bitmap image;
-                    using (MemoryStream stream = new MemoryStream(resFile.bytes))
+                    using (MemoryStream stream = new MemoryStream(resFile.Bytes))
                     {
                         image = new Bitmap(stream);
                     }
@@ -668,31 +668,31 @@ namespace Telegram
 
             var result = await client.GetContactsAsync();
 
-            var user = result.users.lists
+            var user = result.Users.ToList()
                 .OfType<TLUser>()
-                .FirstOrDefault(x => x.phone == NumberToSendMessage);
+                .FirstOrDefault(x => x.Phone == NumberToSendMessage);
 
-            var inputPeer = new TLInputPeerUser() { user_id = user.id };
-            var res = await client.SendRequestAsync<TLMessagesSlice>(new TLRequestGetHistory() { peer = inputPeer, limit = 1 });
-            var document = res.messages.lists
+            var inputPeer = new TLInputPeerUser() { UserId = user.Id };
+            var res = await client.SendRequestAsync<TLMessagesSlice>(new TLRequestGetHistory() { Peer = inputPeer, Limit = 1 });
+            var document = res.Messages.ToList()
                 .OfType<TLMessage>()
-                .Where(m => m.media != null)
-                .Select(m => m.media)
+                .Where(m => m.Media != null)
+                .Select(m => m.Media)
                 .OfType<TLMessageMediaDocument>()
-                .Select(md => md.document)
+                .Select(md => md.Document)
                 .OfType<TLDocument>()
                 .FirstOrDefault();
 
             var resFile = await client.GetFile(
                 new TLInputDocumentFileLocation()
                 {
-                    access_hash = document.access_hash,
-                    id = document.id,
-                    version = document.version
+                    AccessHash = document.AccessHash,
+                    Id = document.Id,
+                    Version = document.Version
                 },
-                document.size);
+                document.Size);
 
-            bool sss = resFile.bytes.Length > 0;
+            bool sss = resFile.Bytes.Length > 0;
 
 
         }
@@ -752,6 +752,48 @@ namespace Telegram
             catch
             {
             }
+        }
+
+        private async void BtnSendTobot_Click(object sender, EventArgs e)
+        {
+            var client = NewClient();
+
+            await client.ConnectAsync();
+
+            var dialogs = (TLDialogsSlice)await client.GetUserDialogsAsync();
+            var chat = dialogs.Users
+                .Where(c => c.GetType() == typeof(TLUser))
+                .Cast<TLUser>()
+                .FirstOrDefault(c => c.Username == txtBotUser.Text); //Tittle is c.first_name
+
+            await client.SendMessageAsync(new TLInputPeerUser() { UserId = chat.Id, AccessHash = chat.AccessHash.Value }, txt_MessageBot.Text);
+        }
+
+        private async void btnStart_Click(object sender, EventArgs e)
+        {
+            var client = NewClient();
+
+            await client.ConnectAsync();
+
+            var dialogs = (TLDialogsSlice)await client.GetUserDialogsAsync();
+            var chat = dialogs.Users
+                .Where(c => c.GetType() == typeof(TLUser))
+                .Cast<TLUser>()
+                .FirstOrDefault(c => c.Username == txtBotUser.Text); //Tittle is c.first_name
+
+            await client.SendMessageAsync(new TLInputPeerUser() { UserId = chat.Id, AccessHash = chat.AccessHash.Value }, "/start");
+        }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            var inviteReq = new TLRequestImportChatInvite()
+            {
+                Hash = txtGroupHash.Text.Replace("https://t.me/joinchat/", "")
+            };
+
+
+            var inviteResp = await client.SendRequestAsync<object>(inviteReq);
+
         }
     }
 }
