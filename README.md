@@ -6,7 +6,7 @@ my telegram Id : @miladsoft
 🚩🚩🚩 **WARNING** 🚩🚩🚩🚩 
 ## TLSharp LIBRARY IS NO LONGER MAINTAINED    
 
-As a workaround you can use -> [WTelegramClient](https://github.com/wiz0u/WTelegramClient)
+As a workaround you can use -> [TelegramClient](https://github.com/miladsoft/TelegramClient)
 
 WTelegramClient is another C#/.NET open-source library for accessing Telegram Client API and is:
 - offering up-to-date API (latest layer)
