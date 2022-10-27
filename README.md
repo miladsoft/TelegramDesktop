@@ -8,7 +8,7 @@ my telegram Id : @miladsoft
 
 As a workaround you can use -> [TelegramClient](https://github.com/miladsoft/TelegramClient)
 
-WTelegramClient is another C#/.NET open-source library for accessing Telegram Client API and is:
+TelegramClient is another C#/.NET open-source library for accessing Telegram Client API and is:
 - offering up-to-date API (latest layer)
 - safer (latest MTProto v2 implementation and many security checks)
 - feature-complete (handling of updates, multiple-DC connections)
